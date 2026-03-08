@@ -29,3 +29,27 @@ INSERT INTO categorias (nome, imagem) VALUES ('Blocos de Montar', 'blocos-montar
 INSERT INTO categorias (nome, imagem) VALUES ('Brinquedos para Bebe', 'bebe.jpg');
 
 INSERT INTO categorias (nome, imagem) VALUES ('Brinquedos Eletronicos', 'eletronicos.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Quebra-Cabecas', 'quebra-cabecas.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Brinquedos de Construção', 'construcao.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Figuras de Ação', 'figuras-acao.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Carrinhos de Controle Remoto', 'controle-remoto.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Instrumentos Musicais Infantis', 'instrumentos.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Brinquedos de Praia', 'praia.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Massinha e Artes', 'massinha.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Brinquedos Educativos STEM', 'stem.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Casinhas e Cozinhas', 'casinhas.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Trens e Pistas', 'trens.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Dinossauros', 'dinossauros.jpg');
+
+INSERT INTO categorias (nome, imagem) VALUES ('Super-Herois', 'super-herois.jpg');
