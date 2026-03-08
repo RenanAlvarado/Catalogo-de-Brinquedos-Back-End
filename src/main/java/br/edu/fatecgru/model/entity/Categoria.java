@@ -7,29 +7,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "brinquedos")
-public class Brinquedo {
+@Table(name = "categorias")
+public class Categoria {
 
 	// Atributos
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private String nome, descricao, imagem;
-
-	private double preco;
+	private String nome, imagem;
 
 	// Construtores
-	public Brinquedo() {
+	public Categoria() {
 
 	}
 
-	public Brinquedo(int id, String nome, String descricao, String imagem, double preco) {
+	public Categoria(int id, String nome, String imagem) {
 		this.id = id;
 		this.nome = nome;
-		this.descricao = descricao;
 		this.imagem = imagem;
-		this.preco = preco;
 	}
 
 	// Getters e Setters
@@ -49,14 +45,6 @@ public class Brinquedo {
 		this.nome = nome;
 	}
 
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
 	public String getImagem() {
 		return imagem;
 	}
@@ -65,11 +53,4 @@ public class Brinquedo {
 		this.imagem = imagem;
 	}
 
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
 }
