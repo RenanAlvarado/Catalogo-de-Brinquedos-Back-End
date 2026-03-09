@@ -19,4 +19,9 @@ public class BrinquedoService {
 	public List<Brinquedo> listarTodos() {
 		return brinquedoRepository.findAll();
 	}
+
+	// Listar por contem o nome
+	public List<Brinquedo> getByContainsName(String nome) {
+		return brinquedoRepository.findByNomeContains(nome);
+	}
 }

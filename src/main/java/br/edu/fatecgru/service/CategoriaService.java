@@ -18,10 +18,10 @@ public class CategoriaService {
 	public List<Categoria> listarTodos() {
 		return categoriaRepository.findAll();
 	}
-	
+
 	// Consulta por categoria que contém no nome
-		public List<Categoria> getByContainsName(String nome) {
-			return categoriaRepository.findByNomeContains(nome);
-		}
-	
+	public List<Categoria> getByContainsName(String nome) {
+		return categoriaRepository.findByNomeContains(nome);
+	}
+
 }
