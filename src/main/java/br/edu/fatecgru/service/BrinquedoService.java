@@ -24,4 +24,9 @@ public class BrinquedoService {
 	public List<Brinquedo> getByContainsName(String nome) {
 		return brinquedoRepository.findByNomeContains(nome);
 	}
+
+	// Listar por Id da categoria
+	public List<Brinquedo> getByCategoryId(int categoriaId) {
+		return brinquedoRepository.findByCategoriaId(categoriaId);
+	}
 }

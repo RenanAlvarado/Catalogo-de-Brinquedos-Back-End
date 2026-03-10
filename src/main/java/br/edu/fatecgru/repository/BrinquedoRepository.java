@@ -13,4 +13,5 @@ public interface BrinquedoRepository extends JpaRepository<Brinquedo, Integer> {
 
 	public List<Brinquedo> findByNomeContains(String nome);
 
+	public List<Brinquedo> findByCategoriaId(int categoriaId);
 }
