@@ -18,10 +18,10 @@ import br.edu.fatecgru.service.UsuarioService;
 public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
-	
-	@GetMapping("/todos")
-	public List<Usuario> listarTodos(){
+
+	@GetMapping
+	public List<Usuario> listarTodos() {
 		return usuarioService.listarTodos();
 	}
-	
+
 }
