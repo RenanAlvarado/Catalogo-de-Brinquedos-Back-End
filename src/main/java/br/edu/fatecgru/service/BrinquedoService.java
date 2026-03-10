@@ -12,7 +12,6 @@ import br.edu.fatecgru.repository.BrinquedoRepository;
 public class BrinquedoService {
 
 	// Método de puxar todos para realização do teste
-
 	@Autowired
 	private BrinquedoRepository brinquedoRepository;
 

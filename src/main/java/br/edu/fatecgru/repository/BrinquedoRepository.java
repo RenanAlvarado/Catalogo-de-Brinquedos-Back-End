@@ -8,7 +8,7 @@ import br.edu.fatecgru.model.entity.Brinquedo;
 
 public interface BrinquedoRepository extends JpaRepository<Brinquedo, Integer> {
 
-//	Para gerar um método
+	//	Para gerar um método
 	public Brinquedo findByNome(String nome);
 
 	public List<Brinquedo> findByNomeContains(String nome);
