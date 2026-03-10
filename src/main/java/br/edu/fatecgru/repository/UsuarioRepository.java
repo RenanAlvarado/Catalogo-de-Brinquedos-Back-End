@@ -6,4 +6,6 @@ import br.edu.fatecgru.model.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
+	
+	
 }

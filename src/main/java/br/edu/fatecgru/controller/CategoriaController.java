@@ -14,6 +14,7 @@ import br.edu.fatecgru.service.CategoriaService;
 
 @CrossOrigin(origins = "*")
 @RestController
+//Cria o geral, todos precisam desse
 @RequestMapping("/api/categorias")
 public class CategoriaController {
 

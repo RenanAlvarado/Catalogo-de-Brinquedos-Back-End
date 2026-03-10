@@ -34,3 +34,23 @@ INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id) VALUES ('C
 INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id) VALUES ('Urso de Pelucia', 'Urso de pelucia macio tamanho medio', 'urso.jpg', 59.90, 5);
 
 INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id) VALUES ('Pista Hot Wheels', 'Pista de corrida Hot Wheels com loop', 'pista.jpg', 129.90, 1);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('ana.jpg', 'Ana Souza', 'ana.souza@email.com', '123456', 'CLIENTE');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('carlos.jpg', 'Carlos Mendes', 'carlos.mendes@email.com', '123456', 'CLIENTE');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('mariana.jpg', 'Mariana Lima', 'mariana.lima@email.com', '123456', 'CLIENTE');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('joao.jpg', 'João Pereira', 'joao.pereira@email.com', '123456', 'CLIENTE');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('lucas.jpg', 'Lucas Martins', 'lucas.martins@email.com', '123456', 'CLIENTE');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('fernanda.jpg', 'Fernanda Alves', 'fernanda.alves@email.com', '123456', 'CLIENTE');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('roberto.jpg', 'Roberto Silva', 'roberto.silva@email.com', '123456', 'ADMIN');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('patricia.jpg', 'Patricia Gomes', 'patricia.gomes@email.com', '123456', 'CLIENTE');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('rafael.jpg', 'Rafael Costa', 'rafael.costa@email.com', '123456', 'ADMIN');
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('juliana.jpg', 'Juliana Rocha', 'juliana.rocha@email.com', '123456', 'CLIENTE');
