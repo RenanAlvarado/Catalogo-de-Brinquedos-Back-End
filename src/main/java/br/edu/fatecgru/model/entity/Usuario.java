@@ -1,11 +1,11 @@
 package br.edu.fatecgru.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,14 +17,18 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private String nome, email, senha, imagem, tipo;
+	private String nome, email, senha, imagem;
+	
+	// Para salvar o tipo apenas como "Admin" ou "cliente"
+	@Enumerated(EnumType.STRING)
+    private TipoUsuario tipo;
 	
 	// Construtores
 	public Usuario() {
 		
 	}
 
-	public Usuario(int id, String nome, String email, String senha, String imagem, String tipo) {
+	public Usuario(int id, String nome, String email, String senha, String imagem, TipoUsuario tipo) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -74,11 +78,11 @@ public class Usuario {
 		this.imagem = imagem;
 	}
 
-	public String getTipo() {
+	public TipoUsuario getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
 	
