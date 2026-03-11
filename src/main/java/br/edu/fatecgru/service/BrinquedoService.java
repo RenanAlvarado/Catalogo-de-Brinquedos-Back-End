@@ -28,4 +28,9 @@ public class BrinquedoService {
 	public List<Brinquedo> getByCategoryId(int categoriaId) {
 		return brinquedoRepository.findByCategoriaId(categoriaId);
 	}
+
+	// Listar por Id da marca
+	public List<Brinquedo> getByBrandId(int marcaId) {
+		return brinquedoRepository.findByMarcaId(marcaId);
+	}
 }

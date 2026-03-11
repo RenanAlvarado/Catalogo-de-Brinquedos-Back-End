@@ -1,6 +1,9 @@
 package br.edu.fatecgru.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
@@ -8,6 +11,10 @@ import jakarta.persistence.Table;
 public class Marca {
 
 	// Atributos
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
 	public String nome, imagem;
 
 	// Construtores

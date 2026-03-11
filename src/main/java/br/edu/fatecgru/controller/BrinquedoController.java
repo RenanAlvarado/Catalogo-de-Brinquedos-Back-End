@@ -38,4 +38,10 @@ public class BrinquedoController {
 		return brinquedoService.getByCategoryId(id);
 	}
 
+	// Busca por Id da marca
+	@GetMapping("/marca/{id}")
+	public List<Brinquedo> buscarPorIdMarca(@PathVariable int id) {
+		return brinquedoService.getByBrandId(id);
+	}
+
 }
