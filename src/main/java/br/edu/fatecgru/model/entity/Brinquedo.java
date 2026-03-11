@@ -26,18 +26,25 @@ public class Brinquedo {
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 
+	// Uma marca para muitos brinquedos
+	@ManyToOne
+	@JoinColumn(name = "marca_id")
+	private Marca marca;
+
 	// Construtores
 	public Brinquedo() {
 
 	}
 
-	public Brinquedo(int id, String nome, String descricao, String imagem, double preco, Categoria categoria) {
+	public Brinquedo(int id, String nome, String descricao, String imagem, double preco, Categoria categoria,
+			Marca marca) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.imagem = imagem;
 		this.preco = preco;
 		this.categoria = categoria;
+		this.marca = marca;
 	}
 
 	// Getters e Setters
@@ -87,6 +94,14 @@ public class Brinquedo {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
 	}
 
 }
