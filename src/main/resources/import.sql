@@ -19,14 +19,14 @@ INSERT INTO categorias (nome, imagem) VALUES ('Trens e Pistas', 'trens.jpg');
 INSERT INTO categorias (nome, imagem) VALUES ('Dinossauros', 'dinossauros.jpg');
 INSERT INTO categorias (nome, imagem) VALUES ('Super-Herois', 'super-herois.jpg');
 
-INSERT INTO marca (nome, imagem) VALUES ('Candide', 'candide.jpg');
-INSERT INTO marca (nome, imagem) VALUES ('Disney', 'disney.jpg');
-INSERT INTO marca (nome, imagem) VALUES ('Fisher Price', 'fisher_price.jpg');
-INSERT INTO marca (nome, imagem) VALUES ('Hasbro', 'hasbro.jpg');
-INSERT INTO marca (nome, imagem) VALUES ('Hotwheels', 'hotwheels.jpg');
-INSERT INTO marca (nome, imagem) VALUES ('Lego', 'lego.jpg');
-INSERT INTO marca (nome, imagem) VALUES ('Mattel', 'mattel.jpg');
-INSERT INTO marca (nome, imagem) VALUES ('Pop', 'pop.jpg');
+INSERT INTO marcas (nome, imagem) VALUES ('Candide', 'candide.jpg');
+INSERT INTO marcas (nome, imagem) VALUES ('Disney', 'disney.jpg');
+INSERT INTO marcas (nome, imagem) VALUES ('Fisher Price', 'fisher_price.jpg');
+INSERT INTO marcas (nome, imagem) VALUES ('Hasbro', 'hasbro.jpg');
+INSERT INTO marcas (nome, imagem) VALUES ('Hotwheels', 'hotwheels.jpg');
+INSERT INTO marcas (nome, imagem) VALUES ('Lego', 'lego.jpg');
+INSERT INTO marcas (nome, imagem) VALUES ('Mattel', 'mattel.jpg');
+INSERT INTO marcas (nome, imagem) VALUES ('Pop', 'pop.jpg');
 
 INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Carrinho Hot Wheels', 'Carrinho de metal em miniatura da linha Hot Wheels', 'hotwheels.jpg', 19.90, 1, 5);
 
