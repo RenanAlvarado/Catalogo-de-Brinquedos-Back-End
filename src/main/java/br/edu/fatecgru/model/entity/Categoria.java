@@ -13,7 +13,7 @@ public class Categoria {
 	// Atributos
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	private String nome, imagem;
 
@@ -22,7 +22,7 @@ public class Categoria {
 
 	}
 
-	public Categoria(int id, String nome, String imagem) {
+	public Categoria(Integer id, String nome, String imagem) {
 		this.id = id;
 		this.nome = nome;
 		this.imagem = imagem;
@@ -33,7 +33,7 @@ public class Categoria {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

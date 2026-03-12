@@ -15,7 +15,7 @@ public class Brinquedo {
 	// Atributos
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	private String nome, descricao, imagem;
 
@@ -36,7 +36,7 @@ public class Brinquedo {
 
 	}
 
-	public Brinquedo(int id, String nome, String descricao, String imagem, double preco, Categoria categoria,
+	public Brinquedo(Integer id, String nome, String descricao, String imagem, double preco, Categoria categoria,
 			Marca marca) {
 		this.id = id;
 		this.nome = nome;
@@ -52,7 +52,7 @@ public class Brinquedo {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

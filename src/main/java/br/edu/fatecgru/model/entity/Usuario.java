@@ -15,20 +15,20 @@ public class Usuario {
 	// Atributos
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	private String nome, email, senha, imagem;
-	
+
 	// Para salvar o tipo apenas como "Admin" ou "cliente"
 	@Enumerated(EnumType.STRING)
-    private TipoUsuario tipo;
-	
+	private TipoUsuario tipo;
+
 	// Construtores
 	public Usuario() {
-		
+
 	}
 
-	public Usuario(int id, String nome, String email, String senha, String imagem, TipoUsuario tipo) {
+	public Usuario(Integer id, String nome, String email, String senha, String imagem, TipoUsuario tipo) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -36,13 +36,13 @@ public class Usuario {
 		this.imagem = imagem;
 		this.tipo = tipo;
 	}
-	
+
 	// Getter e setters
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -85,5 +85,5 @@ public class Usuario {
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
-	
+
 }

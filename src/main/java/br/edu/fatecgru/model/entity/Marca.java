@@ -13,7 +13,7 @@ public class Marca {
 	// Atributos
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	public String nome, imagem;
 
