@@ -12,7 +12,6 @@ import br.edu.fatecgru.repository.BrinquedoRepository;
 public class BrinquedoService {
 
 	// Método de puxar todos para realização do teste
-
 	@Autowired
 	private BrinquedoRepository brinquedoRepository;
 
@@ -23,5 +22,15 @@ public class BrinquedoService {
 	// Listar por contem o nome
 	public List<Brinquedo> getByContainsName(String nome) {
 		return brinquedoRepository.findByNomeContains(nome);
+	}
+
+	// Listar por Id da categoria
+	public List<Brinquedo> getByCategoryId(int categoriaId) {
+		return brinquedoRepository.findByCategoriaId(categoriaId);
+	}
+
+	// Listar por Id da marca
+	public List<Brinquedo> getByBrandId(int marcaId) {
+		return brinquedoRepository.findByMarcaId(marcaId);
 	}
 }
