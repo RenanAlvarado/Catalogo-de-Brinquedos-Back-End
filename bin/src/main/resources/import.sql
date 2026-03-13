@@ -28,6 +28,7 @@ INSERT INTO categorias (nome, imagem) VALUES ('Blocos de Montar', 'blocos-montar
 
 INSERT INTO categorias (nome, imagem) VALUES ('Brinquedos para Bebe', 'bebe.jpg');
 
+<<<<<<< HEAD
 INSERT INTO categorias (nome, imagem) VALUES ('Brinquedos Eletronicos', 'eletronicos.jpg');
 
 INSERT INTO categorias (nome, imagem) VALUES ('Quebra-Cabecas', 'quebra-cabecas.jpg');
@@ -53,3 +54,6 @@ INSERT INTO categorias (nome, imagem) VALUES ('Trens e Pistas', 'trens.jpg');
 INSERT INTO categorias (nome, imagem) VALUES ('Dinossauros', 'dinossauros.jpg');
 
 INSERT INTO categorias (nome, imagem) VALUES ('Super-Herois', 'super-herois.jpg');
+=======
+INSERT INTO categorias (nome, imagem) VALUES ('Brinquedos Eletronicos', 'eletronicos.jpg');
+>>>>>>> branch 'master' of https://github.com/RenanAlvarado/Catalogo-de-Brinquedos-Back-End.git
