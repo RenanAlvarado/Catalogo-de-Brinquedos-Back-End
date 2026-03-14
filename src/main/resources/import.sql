@@ -36,11 +36,11 @@ INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) 
 
 INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Dinossauro T-Rex', 'Dinossauro de brinquedo articulado', 'trex.jpg', 49.90, 19, 1);
 
-INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Quebra cabeca 500 pecas', 'Quebra cabeca infantil de 500 pecas', 'puzzle500.jpg', 39.90, 9, 4);
+INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Quebra cabeca 500 pecas', 'Quebra cabeca infantil de 500 pecas', 'puzzle500.jpg', 39.90, 9, 2);
 
 INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Caminhao de Bombeiro', 'Caminhao de bombeiro com escada movel', 'bombeiro.jpg', 74.90, 1, 3);
 
-INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Urso de Pelucia', 'Urso de pelucia macio tamanho medio', 'urso.jpg', 59.90, 5, 8);
+INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Urso de Pelucia', 'Urso de pelucia macio tamanho medio', 'urso.jpg', 59.90, 5, 7);
 
 INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Pista Hot Wheels', 'Pista de corrida Hot Wheels com loop', 'pista.jpg', 129.90, 1, 5);
 
