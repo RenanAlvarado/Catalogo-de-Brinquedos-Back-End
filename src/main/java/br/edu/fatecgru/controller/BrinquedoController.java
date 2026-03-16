@@ -32,13 +32,13 @@ public class BrinquedoController {
 		return brinquedoService.getByContainsName(nome);
 	}
 
-	// Busca todos os brinqurdos por Id da categoria
+	// Busca por Id da categoria
 	@GetMapping("/categoria/{id}")
 	public List<Brinquedo> buscarPorIdCategoria(@PathVariable int id) {
 		return brinquedoService.getByCategoryId(id);
 	}
 
-	// Busca todos os brinquedos por Id da marca
+	// Busca por Id da marca
 	@GetMapping("/marca/{id}")
 	public List<Brinquedo> buscarPorIdMarca(@PathVariable int id) {
 		return brinquedoService.getByBrandId(id);

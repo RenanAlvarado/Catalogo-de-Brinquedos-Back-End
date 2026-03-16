@@ -22,22 +22,12 @@ public class Marca {
 
 	}
 
-	public Marca(Integer id, String nome, String imagem) {
-		super();
-		this.id = id;
+	public Marca(String nome, String imagem) {
 		this.nome = nome;
 		this.imagem = imagem;
 	}
 
 	// Getters e Setters
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getNome() {
 		return nome;
 	}
