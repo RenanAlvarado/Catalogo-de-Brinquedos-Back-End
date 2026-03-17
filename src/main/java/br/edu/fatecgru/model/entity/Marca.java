@@ -23,7 +23,7 @@ public class Marca {
 	}
 
 	public Marca(Integer id, String nome, String imagem) {
-		super();
+
 		this.id = id;
 		this.nome = nome;
 		this.imagem = imagem;
