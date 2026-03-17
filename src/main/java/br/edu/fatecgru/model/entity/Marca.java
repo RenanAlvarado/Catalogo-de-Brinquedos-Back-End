@@ -22,13 +22,11 @@ public class Marca {
 
 	}
 
-<<<<<<< HEAD
 	public Marca(String nome, String imagem) {
-=======
-	public Marca(Integer id, String nome, String imagem) {
+	}
 
+	public Marca(Integer id, String nome, String imagem) {
 		this.id = id;
->>>>>>> branch 'master' of https://github.com/RenanAlvarado/Catalogo-de-Brinquedos-Back-End.git
 		this.nome = nome;
 		this.imagem = imagem;
 	}
