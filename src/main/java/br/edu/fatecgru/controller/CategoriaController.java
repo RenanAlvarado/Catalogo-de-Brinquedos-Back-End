@@ -21,15 +21,15 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaService categoriaService;
 
-	@GetMapping ("/todos")
+	@GetMapping
 	public List<Categoria> listarTodos() {
 		return categoriaService.listarTodos();
 	}
-	
+
 	// Busca de categoria pelo nome
 	@GetMapping("/{nome}")
-		public List<Categoria> buscarPorContemNome(@PathVariable String nome) {
-			return categoriaService.getByContainsName(nome);
-		}
+	public List<Categoria> buscarPorContemNome(@PathVariable String nome) {
+		return categoriaService.getByContainsName(nome);
+	}
 
 }
