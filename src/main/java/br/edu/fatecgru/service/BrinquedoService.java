@@ -3,6 +3,8 @@ package br.edu.fatecgru.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.edu.fatecgru.model.entity.Brinquedo;
@@ -33,4 +35,10 @@ public class BrinquedoService {
 	public List<Brinquedo> getByBrandId(int marcaId) {
 		return brinquedoRepository.findByMarcaId(marcaId);
 	}
+
+	// Listar paginado
+	public Page<Brinquedo> listarPaginado(int page, int size) {
+		return brinquedoRepository.findAll(PageRequest.of(page, size));
+	}
+
 }

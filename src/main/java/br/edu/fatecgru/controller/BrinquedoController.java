@@ -3,10 +3,12 @@ package br.edu.fatecgru.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.fatecgru.model.entity.Brinquedo;
@@ -42,6 +44,14 @@ public class BrinquedoController {
 	@GetMapping("/marca/{id}")
 	public List<Brinquedo> buscarPorIdMarca(@PathVariable int id) {
 		return brinquedoService.getByBrandId(id);
+	}
+
+	// Listar os brinquedos por página
+	@GetMapping("/listar-paginas")
+	public Page<Brinquedo> listar(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "15") int size) {
+
+		return brinquedoService.listarPaginado(page, size);
 	}
 
 }
