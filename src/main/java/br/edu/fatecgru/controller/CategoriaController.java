@@ -21,7 +21,7 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaService categoriaService;
 
-	@GetMapping
+	@GetMapping ("/todos")
 	public List<Categoria> listarTodos() {
 		return categoriaService.listarTodos();
 	}
