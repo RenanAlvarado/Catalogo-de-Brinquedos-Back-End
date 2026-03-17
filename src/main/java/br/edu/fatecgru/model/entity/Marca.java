@@ -22,9 +22,6 @@ public class Marca {
 
 	}
 
-	public Marca(String nome, String imagem) {
-	}
-
 	public Marca(Integer id, String nome, String imagem) {
 		this.id = id;
 		this.nome = nome;
