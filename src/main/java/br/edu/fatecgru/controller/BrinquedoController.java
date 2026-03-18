@@ -49,7 +49,8 @@ public class BrinquedoController {
 	// Listar os brinquedos por página
 	@GetMapping("/listar-paginas")
 	public Page<Brinquedo> listar(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "15") int size) {
+
+			@RequestParam(defaultValue = "16") int size) {
 
 		return brinquedoService.listarPaginado(page, size);
 	}

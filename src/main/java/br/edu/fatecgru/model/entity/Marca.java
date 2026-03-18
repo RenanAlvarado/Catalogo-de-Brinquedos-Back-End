@@ -52,5 +52,4 @@ public class Marca {
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
 	}
-
 }

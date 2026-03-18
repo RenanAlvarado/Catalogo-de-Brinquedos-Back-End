@@ -103,5 +103,4 @@ public class Brinquedo {
 	public void setMarca(Marca marca) {
 		this.marca = marca;
 	}
-
 }

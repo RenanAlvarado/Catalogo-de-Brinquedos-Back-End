@@ -85,5 +85,4 @@ public class Usuario {
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
-
 }
