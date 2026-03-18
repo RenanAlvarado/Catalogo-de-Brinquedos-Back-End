@@ -41,4 +41,20 @@ public class BrinquedoService {
 		return brinquedoRepository.findAll(PageRequest.of(page, size));
 	}
 
+	/*
+	 * public Page<Brinquedo> filtrar(List<Long> categorias, List<Long> marcas, int
+	 * page, int size, String sort) {
+	 * 
+	 * Sort ordenacao = Sort.unsorted();
+	 * 
+	 * if ("preco-asc".equals(sort)) { ordenacao = Sort.by("preco").ascending(); }
+	 * else if ("preco-desc".equals(sort)) { ordenacao =
+	 * Sort.by("preco").descending(); } else if ("nome-asc".equals(sort)) {
+	 * ordenacao = Sort.by("nome").ascending(); }
+	 * 
+	 * Pageable pageable = PageRequest.of(page, size, ordenacao);
+	 * 
+	 * return brinquedoRepository.filtrar(categorias, marcas, pageable); }
+	 */
+
 }

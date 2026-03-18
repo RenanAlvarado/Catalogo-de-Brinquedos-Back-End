@@ -55,4 +55,19 @@ public class BrinquedoController {
 		return brinquedoService.listarPaginado(page, size);
 	}
 
+	/*
+	 * @GetMapping("/filtrar") public Page<Brinquedo> filtrar(
+	 * 
+	 * @RequestParam(required = false) List<Long> categorias,
+	 * 
+	 * @RequestParam(required = false) List<Long> marcas,
+	 * 
+	 * @RequestParam(defaultValue = "0") int page,
+	 * 
+	 * @RequestParam(defaultValue = "15") int size,
+	 * 
+	 * @RequestParam(required = false) String sort ) { return
+	 * brinquedoService.filtrar(categorias, marcas, page, size, sort); }
+	 */
+
 }
