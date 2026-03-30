@@ -23,6 +23,11 @@ public class BrinquedoService {
 		return brinquedoRepository.findAll();
 	}
 
+	// Listar pelo ID do brinquedo
+	public Brinquedo getById(int id) {
+		return brinquedoRepository.findById(id).orElse(null);
+	}
+
 	// Listar por contem o nome
 	public List<Brinquedo> getByContainsName(String nome) {
 		return brinquedoRepository.findByNomeContains(nome);

@@ -28,6 +28,11 @@ public class BrinquedoController {
 		return brinquedoService.listarTodos();
 	}
 
+	@GetMapping("/{id}")
+	public Brinquedo buscarPorId(@PathVariable int id) {
+		return brinquedoService.getById(id);
+	}
+
 	// Busca por contem nome
 	@GetMapping("/contem-nome/{nome}")
 	public List<Brinquedo> buscarPorContemNome(@PathVariable String nome) {
