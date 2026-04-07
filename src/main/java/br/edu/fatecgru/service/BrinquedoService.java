@@ -71,4 +71,23 @@ public class BrinquedoService {
 		return brinquedoRepository.filtrar(categorias, marcas, pageable);
 	}
 
+	// Salvar brinquedo
+	public Brinquedo salvar(Brinquedo brinquedo) {
+		brinquedo = new Brinquedo();
+		brinquedo.setNome(brinquedo.getNome());
+		brinquedo.setDescricao(brinquedo.getDescricao());
+		brinquedo.setImagem(brinquedo.getImagem());
+		brinquedo.setPreco(brinquedo.getPreco());
+		brinquedo.setCategoria(brinquedo.getCategoria());
+		brinquedo.setMarca(brinquedo.getMarca());
+		return brinquedoRepository.save(brinquedo);
+	}
+
+	// Alterar brinquedo
+
+	// Excluir brinquedo
+	public void excluir(int id) {
+		brinquedoRepository.deleteById(id);
+	}
+
 }
