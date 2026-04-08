@@ -71,22 +71,13 @@ public class BrinquedoService {
 		return brinquedoRepository.filtrar(categorias, marcas, pageable);
 	}
 
-	// Salvar brinquedo
-	public Brinquedo salvar(Brinquedo brinquedo) {
-		brinquedo = new Brinquedo();
-		brinquedo.setNome(brinquedo.getNome());
-		brinquedo.setDescricao(brinquedo.getDescricao());
-		brinquedo.setImagem(brinquedo.getImagem());
-		brinquedo.setPreco(brinquedo.getPreco());
-		brinquedo.setCategoria(brinquedo.getCategoria());
-		brinquedo.setMarca(brinquedo.getMarca());
+	// Método para salvar ou alterar brinquedo
+	public Brinquedo saveBrinquedo(Brinquedo brinquedo) {
 		return brinquedoRepository.save(brinquedo);
 	}
 
-	// Alterar brinquedo
-
-	// Excluir brinquedo
-	public void excluir(int id) {
+	// Método para excluir brinquedo
+	public void deleteBrinquedo(int id) {
 		brinquedoRepository.deleteById(id);
 	}
 

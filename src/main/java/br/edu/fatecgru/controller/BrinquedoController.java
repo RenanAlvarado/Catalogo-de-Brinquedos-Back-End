@@ -5,8 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,6 +69,32 @@ public class BrinquedoController {
 			@RequestParam(required = false) List<Long> marcas, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "15") int size, @RequestParam(required = false) String sort) {
 		return brinquedoService.filtrar(categorias, marcas, page, size, sort);
+	}
+
+	// Salvar brinquedo
+	@PostMapping
+	public Brinquedo insert(@RequestBody Brinquedo brinquedo) {
+		return brinquedoService.saveBrinquedo(brinquedo);
+	}
+
+	// Alterar brinquedo
+	@PutMapping("/{id}")
+	public Brinquedo update(@RequestBody Brinquedo brinquedo, @PathVariable Integer id) {
+		Brinquedo brinquedoUpdate = brinquedoService.getById(id);
+		brinquedoUpdate.setNome(brinquedo.getNome());
+		brinquedoUpdate.setDescricao(brinquedo.getDescricao());
+		brinquedoUpdate.setImagem(brinquedo.getImagem());
+		brinquedoUpdate.setPreco(brinquedo.getPreco());
+		brinquedoUpdate.setCategoria(brinquedo.getCategoria());
+		brinquedoUpdate.setMarca(brinquedo.getMarca());
+		return brinquedoService.saveBrinquedo(brinquedoUpdate);
+	}
+
+	// Deletar brinquedo
+	@DeleteMapping("/{id}")
+	public String delete(@PathVariable("id") int id) {
+		brinquedoService.deleteBrinquedo(id);
+		return "Brinquedo Excluido com sucesso!";
 	}
 
 }
