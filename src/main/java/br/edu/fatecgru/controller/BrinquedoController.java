@@ -1,5 +1,7 @@
 package br.edu.fatecgru.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.fatecgru.model.entity.Brinquedo;
 import br.edu.fatecgru.service.BrinquedoService;
+import tools.jackson.databind.ObjectMapper;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -72,8 +76,29 @@ public class BrinquedoController {
 	}
 
 	// Salvar brinquedo
-	@PostMapping
-	public Brinquedo insert(@RequestBody Brinquedo brinquedo) {
+	@PostMapping(consumes = "multipart/form-data")
+	public Brinquedo insert(@RequestParam("brinquedo") String brinquedoJson,
+			@RequestParam(value = "imagem", required = false) MultipartFile imagem) throws Exception {
+
+		ObjectMapper mapper = new ObjectMapper();
+		Brinquedo brinquedo = mapper.readValue(brinquedoJson, Brinquedo.class);
+
+		if (imagem != null && !imagem.isEmpty()) {
+
+			String nomeArquivo = System.currentTimeMillis() + "_" + imagem.getOriginalFilename();
+
+			String pasta = System.getProperty("user.dir") + "/uploads/toys/";
+			File diretorio = new File(pasta);
+
+			if (!diretorio.exists()) {
+				diretorio.mkdirs();
+			}
+
+			imagem.transferTo(new File(pasta + nomeArquivo));
+
+			brinquedo.setImagem(nomeArquivo);
+		}
+
 		return brinquedoService.saveBrinquedo(brinquedo);
 	}
 
@@ -95,6 +120,38 @@ public class BrinquedoController {
 	public String delete(@PathVariable("id") int id) {
 		brinquedoService.deleteBrinquedo(id);
 		return "Brinquedo Excluido com sucesso!";
+	}
+
+	// Upload da imagem no adicionar brinquedos
+	@PostMapping("/upload")
+	public String uploadImagem(@RequestParam("file") MultipartFile file) throws IOException {
+
+		if (file.isEmpty()) {
+			throw new RuntimeException("Arquivo vazio!");
+		}
+
+		// nome original
+		String nomeOriginal = file.getOriginalFilename();
+
+		// gera nome único (evita sobrescrever arquivos)
+		String nomeArquivo = System.currentTimeMillis() + "_" + nomeOriginal;
+
+		// caminho absoluto (raiz do projeto)
+		String pasta = System.getProperty("user.dir") + "/uploads/toys/";
+
+		File diretorio = new File(pasta);
+
+		// cria a pasta se não existir
+		if (!diretorio.exists()) {
+			diretorio.mkdirs();
+		}
+
+		String caminhoCompleto = pasta + nomeArquivo;
+
+		// salva o arquivo
+		file.transferTo(new File(caminhoCompleto));
+
+		return nomeArquivo;
 	}
 
 }
