@@ -1,11 +1,14 @@
 package br.edu.fatecgru.controller;
 
 import java.io.File;
-import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +18,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.edu.fatecgru.model.entity.Brinquedo;
 import br.edu.fatecgru.service.BrinquedoService;
@@ -76,8 +82,40 @@ public class BrinquedoController {
 
 	// Salvar brinquedo
 	@PostMapping
-	public Brinquedo insert(@RequestBody Brinquedo brinquedo) {
-		return brinquedoService.saveBrinquedo(brinquedo);
+	public ResponseEntity<?> insert(@RequestPart("brinquedo") String brinquedoJson,
+			@RequestPart(value = "imagem", required = false) MultipartFile imagem) {
+
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			Brinquedo brinquedo = mapper.readValue(brinquedoJson, Brinquedo.class);
+
+			// Mostra no log o JSON recebido
+			System.out.println("JSON recebido: " + brinquedoJson);
+
+			if (imagem != null && !imagem.isEmpty()) {
+				// Pasta de upload
+				String pasta = System.getProperty("user.dir") + "/uploads/toys/";
+				File diretorio = new File(pasta);
+				if (!diretorio.exists()) {
+					diretorio.mkdirs();
+				}
+
+				String nomeArquivo = System.currentTimeMillis() + "_" + imagem.getOriginalFilename();
+				Path caminho = Paths.get(pasta + nomeArquivo);
+				Files.write(caminho, imagem.getBytes());
+
+				System.out.println("Imagem salva em: " + caminho.toAbsolutePath());
+				brinquedo.setImagem(nomeArquivo);
+			}
+
+			Brinquedo salvo = brinquedoService.saveBrinquedo(brinquedo);
+			System.out.println("Brinquedo salvo: " + salvo.getId());
+			return ResponseEntity.ok(salvo);
+
+		} catch (Exception e) {
+			e.printStackTrace(); // Mostra exatamente o que deu errado no backend
+			return ResponseEntity.status(500).body("Erro interno: " + e.toString());
+		}
 	}
 
 	// Alterar brinquedo
@@ -98,38 +136,6 @@ public class BrinquedoController {
 	public String delete(@PathVariable("id") int id) {
 		brinquedoService.deleteBrinquedo(id);
 		return "Brinquedo Excluido com sucesso!";
-	}
-
-	// Upload da imagem no adicionar brinquedos
-	@PostMapping("/upload")
-	public String uploadImagem(@RequestParam("file") MultipartFile file) throws IOException {
-
-		if (file.isEmpty()) {
-			throw new RuntimeException("Arquivo vazio!");
-		}
-
-		// nome original
-		String nomeOriginal = file.getOriginalFilename();
-
-		// gera nome único (evita sobrescrever arquivos)
-		String nomeArquivo = System.currentTimeMillis() + "_" + nomeOriginal;
-
-		// caminho absoluto (raiz do projeto)
-		String pasta = System.getProperty("user.dir") + "/uploads/toys/";
-
-		File diretorio = new File(pasta);
-
-		// cria a pasta se não existir
-		if (!diretorio.exists()) {
-			diretorio.mkdirs();
-		}
-
-		String caminhoCompleto = pasta + nomeArquivo;
-
-		// salva o arquivo
-		file.transferTo(new File(caminhoCompleto));
-
-		return nomeArquivo;
 	}
 
 }
