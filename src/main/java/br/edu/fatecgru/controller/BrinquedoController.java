@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.fatecgru.model.entity.Brinquedo;
 import br.edu.fatecgru.service.BrinquedoService;
-import tools.jackson.databind.ObjectMapper;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -76,29 +75,8 @@ public class BrinquedoController {
 	}
 
 	// Salvar brinquedo
-	@PostMapping(consumes = "multipart/form-data")
-	public Brinquedo insert(@RequestParam("brinquedo") String brinquedoJson,
-			@RequestParam(value = "imagem", required = false) MultipartFile imagem) throws Exception {
-
-		ObjectMapper mapper = new ObjectMapper();
-		Brinquedo brinquedo = mapper.readValue(brinquedoJson, Brinquedo.class);
-
-		if (imagem != null && !imagem.isEmpty()) {
-
-			String nomeArquivo = System.currentTimeMillis() + "_" + imagem.getOriginalFilename();
-
-			String pasta = System.getProperty("user.dir") + "/uploads/toys/";
-			File diretorio = new File(pasta);
-
-			if (!diretorio.exists()) {
-				diretorio.mkdirs();
-			}
-
-			imagem.transferTo(new File(pasta + nomeArquivo));
-
-			brinquedo.setImagem(nomeArquivo);
-		}
-
+	@PostMapping
+	public Brinquedo insert(@RequestBody Brinquedo brinquedo) {
 		return brinquedoService.saveBrinquedo(brinquedo);
 	}
 
