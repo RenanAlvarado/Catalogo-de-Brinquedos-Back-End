@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -120,15 +119,65 @@ public class BrinquedoController {
 
 	// Alterar brinquedo
 	@PutMapping("/{id}")
-	public Brinquedo update(@RequestBody Brinquedo brinquedo, @PathVariable Integer id) {
-		Brinquedo brinquedoUpdate = brinquedoService.getById(id);
-		brinquedoUpdate.setNome(brinquedo.getNome());
-		brinquedoUpdate.setDescricao(brinquedo.getDescricao());
-		brinquedoUpdate.setImagem(brinquedo.getImagem());
-		brinquedoUpdate.setPreco(brinquedo.getPreco());
-		brinquedoUpdate.setCategoria(brinquedo.getCategoria());
-		brinquedoUpdate.setMarca(brinquedo.getMarca());
-		return brinquedoService.saveBrinquedo(brinquedoUpdate);
+	public ResponseEntity<?> update(@PathVariable Integer id, @RequestPart("brinquedo") String brinquedoJson,
+			@RequestPart(value = "imagem", required = false) MultipartFile imagem) {
+
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			Brinquedo brinquedoNovo = mapper.readValue(brinquedoJson, Brinquedo.class);
+
+			// log do JSON recebido
+			System.out.println("JSON recebido (UPDATE): " + brinquedoJson);
+
+			// busca o existente no banco
+			Brinquedo brinquedo = brinquedoService.getById(id);
+
+			// atualiza os campos
+			brinquedo.setNome(brinquedoNovo.getNome());
+			brinquedo.setDescricao(brinquedoNovo.getDescricao());
+			brinquedo.setPreco(brinquedoNovo.getPreco());
+			brinquedo.setCategoria(brinquedoNovo.getCategoria());
+			brinquedo.setMarca(brinquedoNovo.getMarca());
+
+			// TRATAMENTO DA IMAGEM
+			if (imagem != null && !imagem.isEmpty()) {
+
+				String pasta = System.getProperty("user.dir") + "/uploads/toys/";
+				File diretorio = new File(pasta);
+
+				if (!diretorio.exists()) {
+					diretorio.mkdirs();
+				}
+
+				String nomeArquivo = System.currentTimeMillis() + "_" + imagem.getOriginalFilename();
+				Path caminho = Paths.get(pasta + nomeArquivo);
+
+				Files.write(caminho, imagem.getBytes());
+
+				System.out.println("Nova imagem salva em: " + caminho.toAbsolutePath());
+
+				// Deleta imagem antiga
+				if (brinquedo.getImagem() != null) {
+					File antiga = new File(pasta + brinquedo.getImagem());
+					if (antiga.exists()) {
+						antiga.delete();
+						System.out.println("Imagem antiga deletada");
+					}
+				}
+
+				brinquedo.setImagem(nomeArquivo);
+			}
+
+			Brinquedo atualizado = brinquedoService.saveBrinquedo(brinquedo);
+
+			System.out.println("Brinquedo atualizado: " + atualizado.getId());
+
+			return ResponseEntity.ok(atualizado);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(500).body("Erro interno: " + e.toString());
+		}
 	}
 
 	// Deletar brinquedo
