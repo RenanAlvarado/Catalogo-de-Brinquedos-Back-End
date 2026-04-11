@@ -104,10 +104,8 @@ INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('lucas.jpg', 'Lu
 
 INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('fernanda.jpg', 'Fernanda Alves', 'fernanda.alves@email.com', '123456', 'CLIENTE');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('roberto.jpg', 'Roberto Silva', 'roberto.silva@email.com', '123456', 'ADMIN');
+INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('admin.jpg', 'admin', 'admin@marah.com', 'admin', 'ADMIN');
 
 INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('patricia.jpg', 'Patricia Gomes', 'patricia.gomes@email.com', '123456', 'CLIENTE');
-
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('rafael.jpg', 'Rafael Costa', 'rafael.costa@email.com', '123456', 'ADMIN');
 
 INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('juliana.jpg', 'Juliana Rocha', 'juliana.rocha@email.com', '123456', 'CLIENTE');

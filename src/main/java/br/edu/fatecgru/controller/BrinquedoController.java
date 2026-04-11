@@ -1,9 +1,5 @@
 package br.edu.fatecgru.controller;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.edu.fatecgru.model.entity.Brinquedo;
 import br.edu.fatecgru.service.BrinquedoService;
+import br.edu.fatecgru.service.ImagemService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,6 +31,9 @@ public class BrinquedoController {
 
 	@Autowired
 	private BrinquedoService brinquedoService;
+
+	@Autowired
+	private ImagemService imagemService;
 
 	@GetMapping
 	public List<Brinquedo> listarTodos() {
@@ -88,32 +88,16 @@ public class BrinquedoController {
 			ObjectMapper mapper = new ObjectMapper();
 			Brinquedo brinquedo = mapper.readValue(brinquedoJson, Brinquedo.class);
 
-			// Mostra no log o JSON recebido
-			System.out.println("JSON recebido: " + brinquedoJson);
+			String nomeImagem = imagemService.salvarImagem(imagem);
 
-			if (imagem != null && !imagem.isEmpty()) {
-				// Pasta de upload
-				String pasta = System.getProperty("user.dir") + "/uploads/toys/";
-				File diretorio = new File(pasta);
-				if (!diretorio.exists()) {
-					diretorio.mkdirs();
-				}
-
-				String nomeArquivo = System.currentTimeMillis() + "_" + imagem.getOriginalFilename();
-				Path caminho = Paths.get(pasta + nomeArquivo);
-				Files.write(caminho, imagem.getBytes());
-
-				System.out.println("Imagem salva em: " + caminho.toAbsolutePath());
-				brinquedo.setImagem(nomeArquivo);
+			if (nomeImagem != null) {
+				brinquedo.setImagem(nomeImagem);
 			}
 
-			Brinquedo salvo = brinquedoService.saveBrinquedo(brinquedo);
-			System.out.println("Brinquedo salvo: " + salvo.getId());
-			return ResponseEntity.ok(salvo);
+			return ResponseEntity.ok(brinquedoService.saveBrinquedo(brinquedo));
 
 		} catch (Exception e) {
-			e.printStackTrace(); // Mostra exatamente o que deu errado no backend
-			return ResponseEntity.status(500).body("Erro interno: " + e.toString());
+			return ResponseEntity.status(500).body(e.getMessage());
 		}
 	}
 
@@ -124,67 +108,41 @@ public class BrinquedoController {
 
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			Brinquedo brinquedoNovo = mapper.readValue(brinquedoJson, Brinquedo.class);
+			Brinquedo novo = mapper.readValue(brinquedoJson, Brinquedo.class);
 
-			// log do JSON recebido
-			System.out.println("JSON recebido (UPDATE): " + brinquedoJson);
+			Brinquedo atual = brinquedoService.getById(id);
 
-			// busca o existente no banco
-			Brinquedo brinquedo = brinquedoService.getById(id);
+			atual.setNome(novo.getNome());
+			atual.setDescricao(novo.getDescricao());
+			atual.setPreco(novo.getPreco());
+			atual.setCategoria(novo.getCategoria());
+			atual.setMarca(novo.getMarca());
 
-			// atualiza os campos
-			brinquedo.setNome(brinquedoNovo.getNome());
-			brinquedo.setDescricao(brinquedoNovo.getDescricao());
-			brinquedo.setPreco(brinquedoNovo.getPreco());
-			brinquedo.setCategoria(brinquedoNovo.getCategoria());
-			brinquedo.setMarca(brinquedoNovo.getMarca());
+			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem);
 
-			// TRATAMENTO DA IMAGEM
-			if (imagem != null && !imagem.isEmpty()) {
+			atual.setImagem(imagemAtualizada);
 
-				String pasta = System.getProperty("user.dir") + "/uploads/toys/";
-				File diretorio = new File(pasta);
-
-				if (!diretorio.exists()) {
-					diretorio.mkdirs();
-				}
-
-				String nomeArquivo = System.currentTimeMillis() + "_" + imagem.getOriginalFilename();
-				Path caminho = Paths.get(pasta + nomeArquivo);
-
-				Files.write(caminho, imagem.getBytes());
-
-				System.out.println("Nova imagem salva em: " + caminho.toAbsolutePath());
-
-				// Deleta imagem antiga
-				if (brinquedo.getImagem() != null) {
-					File antiga = new File(pasta + brinquedo.getImagem());
-					if (antiga.exists()) {
-						antiga.delete();
-						System.out.println("Imagem antiga deletada");
-					}
-				}
-
-				brinquedo.setImagem(nomeArquivo);
-			}
-
-			Brinquedo atualizado = brinquedoService.saveBrinquedo(brinquedo);
-
-			System.out.println("Brinquedo atualizado: " + atualizado.getId());
-
-			return ResponseEntity.ok(atualizado);
+			return ResponseEntity.ok(brinquedoService.saveBrinquedo(atual));
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(500).body("Erro interno: " + e.toString());
+			return ResponseEntity.status(500).body(e.getMessage());
 		}
 	}
 
 	// Deletar brinquedo
 	@DeleteMapping("/{id}")
-	public String delete(@PathVariable("id") int id) {
-		brinquedoService.deleteBrinquedo(id);
-		return "Brinquedo Excluido com sucesso!";
-	}
+	public ResponseEntity<?> delete(@PathVariable int id) {
+		try {
+			Brinquedo brinquedo = brinquedoService.getById(id);
 
+			imagemService.deletarImagem(brinquedo.getImagem());
+
+			brinquedoService.deleteBrinquedo(id);
+
+			return ResponseEntity.ok("Deletado com sucesso");
+
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body(e.getMessage());
+		}
+	}
 }

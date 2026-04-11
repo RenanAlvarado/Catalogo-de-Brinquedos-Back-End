@@ -1,6 +1,7 @@
 package br.edu.fatecgru.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,24 @@ public class UsuarioService {
 
 	public List<Usuario> listarTodos() {
 		return usuarioRepository.findAll();
+	}
+
+	// Login
+	public Usuario login(String email, String senha) {
+		Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+
+		if (usuarioOpt.isEmpty()) {
+			throw new RuntimeException("Usuário não encontrado");
+		}
+
+		// Carregar objeto usuário
+		Usuario usuario = usuarioOpt.get();
+
+		if (!usuario.getSenha().equals(senha)) {
+			throw new RuntimeException("Senha inválida");
+		}
+
+		return usuario;
 	}
 
 }
