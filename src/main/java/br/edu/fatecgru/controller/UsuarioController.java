@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.fatecgru.model.dto.UsuarioCadastroDTO;
+import br.edu.fatecgru.model.dto.UsuarioLoginDTO;
 import br.edu.fatecgru.model.entity.Usuario;
 import br.edu.fatecgru.service.UsuarioService;
 
@@ -34,14 +36,26 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody Usuario loginRequest) {
+	public ResponseEntity<?> login(@RequestBody UsuarioLoginDTO dto) {
 		try {
-			Usuario usuario = usuarioService.login(loginRequest.getEmail(), loginRequest.getSenha());
-
+			Usuario usuario = usuarioService.login(dto.getEmail(), dto.getSenha());
 			return ResponseEntity.ok(usuario);
 
 		} catch (Exception e) {
 			return ResponseEntity.status(401).body(e.getMessage());
+		}
+	}
+
+	@PostMapping("/cadastro")
+	public ResponseEntity<?> cadastrar(@RequestBody UsuarioCadastroDTO cadastroRequest) {
+		try {
+			Usuario usuario = usuarioService.cadastrar(cadastroRequest.getNome(), cadastroRequest.getEmail(),
+					cadastroRequest.getSenha());
+
+			return ResponseEntity.ok(usuario);
+
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.fatecgru.model.entity.TipoUsuario;
 import br.edu.fatecgru.model.entity.Usuario;
 import br.edu.fatecgru.repository.UsuarioRepository;
 
@@ -41,6 +42,26 @@ public class UsuarioService {
 		}
 
 		return usuario;
+	}
+
+	// Cadastro
+	public Usuario cadastrar(String nome, String email, String senha) {
+
+		// Se email já existe
+		if (usuarioRepository.findByEmail(email).isPresent()) {
+			throw new RuntimeException("Email já cadastrado");
+		}
+
+		Usuario usuario = new Usuario();
+
+		usuario.setNome(nome);
+		usuario.setEmail(email);
+		usuario.setSenha(senha);
+		usuario.setTipo(TipoUsuario.CLIENTE);
+		usuario.setTelefone(null);
+		usuario.setEndereco(null);
+
+		return usuarioRepository.save(usuario);
 	}
 
 }
