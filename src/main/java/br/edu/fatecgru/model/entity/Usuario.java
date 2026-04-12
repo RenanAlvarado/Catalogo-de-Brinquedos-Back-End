@@ -1,11 +1,14 @@
 package br.edu.fatecgru.model.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +22,13 @@ public class Usuario {
 
 	private String nome, email, senha, imagem;
 
+	// Cascade --> Ação ao usuário também é feita no telefone
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "endereco_id")
+	private Endereco endereco;
+
+	private String telefone;
+
 	// Para salvar o tipo apenas como "Admin" ou "cliente"
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
@@ -28,12 +38,16 @@ public class Usuario {
 
 	}
 
-	public Usuario(Integer id, String nome, String email, String senha, String imagem, TipoUsuario tipo) {
+	public Usuario(Integer id, String nome, String email, String senha, String imagem, Endereco endereco,
+			String telefone, TipoUsuario tipo) {
+
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.imagem = imagem;
+		this.endereco = endereco;
+		this.telefone = telefone;
 		this.tipo = tipo;
 	}
 
@@ -85,4 +99,21 @@ public class Usuario {
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
 }

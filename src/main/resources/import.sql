@@ -91,21 +91,38 @@ INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) 
 /* EDUCATIVOS - Categoria 3 */
 INSERT INTO brinquedos (nome, descricao, imagem, preco, categoria_id, marca_id) VALUES ('Ábaco de Madeira Clássico', 'Ábaco tradicional de madeira com 10 fileiras de contas coloridas para aprender matemática básica de forma visual e divertida.', 'abaco-madeira.jpg', 59.90, 3, 2);
 
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07010-000', 'Rua das Flores', 'Centro', 'Guarulhos', 'SP', '123');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('ana.jpg', 'Ana Souza', 'ana.souza@email.com', '123456', 'CLIENTE');
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07020-000', 'Av. Paulista', 'Bela Vista', 'São Paulo', 'SP', '456');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('carlos.jpg', 'Carlos Mendes', 'carlos.mendes@email.com', '123456', 'CLIENTE');
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07030-000', 'Rua A', 'Jardim Teste', 'Guarulhos', 'SP', '789');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('mariana.jpg', 'Mariana Lima', 'mariana.lima@email.com', '123456', 'CLIENTE');
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07040-000', 'Rua B', 'Vila Nova', 'Guarulhos', 'SP', '101');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('joao.jpg', 'João Pereira', 'joao.pereira@email.com', '123456', 'CLIENTE');
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07050-000', 'Rua C', 'Centro', 'São Paulo', 'SP', '202');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('lucas.jpg', 'Lucas Martins', 'lucas.martins@email.com', '123456', 'CLIENTE');
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07060-000', 'Rua D', 'Mooca', 'São Paulo', 'SP', '303');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('fernanda.jpg', 'Fernanda Alves', 'fernanda.alves@email.com', '123456', 'CLIENTE');
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07070-000', 'Rua E', 'Centro', 'Campinas', 'SP', '404');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('admin.jpg', 'admin', 'admin@marah.com', 'admin', 'ADMIN');
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07080-000', 'Rua F', 'Taquaral', 'Campinas', 'SP', '505');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('patricia.jpg', 'Patricia Gomes', 'patricia.gomes@email.com', '123456', 'CLIENTE');
+INSERT INTO enderecos (cep, logradouro, bairro, cidade, estado, numero) VALUES ('07090-000', 'Rua G', 'Centro', 'Santos', 'SP', '606');
 
-INSERT INTO usuarios (imagem, nome, email, senha, tipo) VALUES ('juliana.jpg', 'Juliana Rocha', 'juliana.rocha@email.com', '123456', 'CLIENTE');
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id) VALUES ('ana.jpg', 'Ana Souza', 'ana.souza@email.com', '123456', 'CLIENTE', '11999990001', 1);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id) VALUES ('carlos.jpg', 'Carlos Mendes', 'carlos.mendes@email.com', '123456', 'CLIENTE', '11999990002', 2);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id) VALUES ('mariana.jpg', 'Mariana Lima', 'mariana.lima@email.com', '123456', 'CLIENTE', '11999990003', 3);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id) VALUES ('joao.jpg', 'João Pereira', 'joao.pereira@email.com', '123456', 'CLIENTE', '11999990004', 4);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id) VALUES ('lucas.jpg', 'Lucas Martins', 'lucas.martins@email.com', '123456', 'CLIENTE', '11999990005', 5);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id) VALUES ('fernanda.jpg', 'Fernanda Alves', 'fernanda.alves@email.com', '123456', 'CLIENTE', '11999990006', 6);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id) VALUES ('admin.jpg', 'admin', 'admin@marah.com', 'admin', 'ADMIN', '11999990000', 7);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id)  VALUES ('patricia.jpg', 'Patricia Gomes', 'patricia.gomes@email.com', '123456', 'CLIENTE', '11999990007', 8);
+
+INSERT INTO usuarios (imagem, nome, email, senha, tipo, telefone, endereco_id) VALUES ('juliana.jpg', 'Juliana Rocha', 'juliana.rocha@email.com', '123456', 'CLIENTE', '11999990008', 9);

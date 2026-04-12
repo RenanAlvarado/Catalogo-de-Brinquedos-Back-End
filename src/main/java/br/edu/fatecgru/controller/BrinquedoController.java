@@ -135,14 +135,16 @@ public class BrinquedoController {
 		try {
 			Brinquedo brinquedo = brinquedoService.getById(id);
 
-			imagemService.deletarImagem(brinquedo.getImagem());
+			if (brinquedo.getImagem() != null) {
+				imagemService.deletarImagem(brinquedo.getImagem());
+			}
 
 			brinquedoService.deleteBrinquedo(id);
 
-			return ResponseEntity.ok("Deletado com sucesso");
+			return ResponseEntity.noContent().build(); // 204
 
 		} catch (Exception e) {
-			return ResponseEntity.status(500).body(e.getMessage());
+			return ResponseEntity.status(500).body("Erro ao deletar: " + e.getMessage());
 		}
 	}
 }

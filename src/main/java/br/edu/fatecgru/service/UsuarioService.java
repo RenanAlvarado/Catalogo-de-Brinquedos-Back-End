@@ -20,6 +20,11 @@ public class UsuarioService {
 		return usuarioRepository.findAll();
 	}
 
+	// Listar pelo ID do brinquedo
+	public Usuario getById(int id) {
+		return usuarioRepository.findById(id).orElse(null);
+	}
+
 	// Login
 	public Usuario login(String email, String senha) {
 		Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
