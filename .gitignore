@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# uploads de imagens
+uploads/
+
+# ou se estiver dentro do static
+src/main/resources/static/uploads/
