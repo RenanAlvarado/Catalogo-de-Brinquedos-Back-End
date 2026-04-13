@@ -64,4 +64,9 @@ public class UsuarioService {
 		return usuarioRepository.save(usuario);
 	}
 
+	// Método para alterar
+	public Usuario saveUsuario(Usuario usuario) {
+		return usuarioRepository.save(usuario);
+	}
+
 }

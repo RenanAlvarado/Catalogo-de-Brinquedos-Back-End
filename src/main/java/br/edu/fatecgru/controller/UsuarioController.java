@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.fatecgru.model.dto.UsuarioCadastroDTO;
 import br.edu.fatecgru.model.dto.UsuarioLoginDTO;
+import br.edu.fatecgru.model.dto.UsuarioUpdateDTO;
 import br.edu.fatecgru.model.entity.Usuario;
 import br.edu.fatecgru.service.UsuarioService;
 
@@ -56,6 +58,26 @@ public class UsuarioController {
 
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody UsuarioUpdateDTO dto) {
+		try {
+
+			Usuario atual = usuarioService.getById(id);
+
+			atual.setNome(dto.getNome());
+			atual.setTelefone(dto.getTelefone());
+			atual.setEndereco(dto.getEndereco());
+
+			Usuario usuarioSalvo = usuarioService.saveUsuario(atual);
+
+			return ResponseEntity.ok(usuarioSalvo);
+
+		} catch (Exception e) {
+
+			return ResponseEntity.status(500).body("Erro ao processar atualização: " + e.getMessage());
 		}
 	}
 
