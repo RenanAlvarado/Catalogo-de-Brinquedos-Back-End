@@ -24,4 +24,19 @@ public class CategoriaService {
 		return categoriaRepository.findByNomeContains(nome);
 	}
 
+	// Consulta por categoria que contém no nome
+	public Categoria getById(int id) {
+		return categoriaRepository.findById(id).orElse(null);
+	}
+
+	// Método para salvar ou alterar categoria
+	public Categoria saveCategoria(Categoria categoria) {
+		return categoriaRepository.save(categoria);
+	}
+
+	// Método para excluir categoria
+	public void deleteCategoria(int id) {
+		categoriaRepository.deleteById(id);
+	}
+
 }
