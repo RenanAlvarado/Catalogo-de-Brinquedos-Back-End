@@ -24,4 +24,19 @@ public class MarcaService {
 		return marcaRepository.findByNomeContains(nome);
 	}
 
+	// Consulta por id marca
+	public Marca getById(int id) {
+		return marcaRepository.findById(id).orElse(null);
+	}
+
+	// Método para salvar ou alterar marca
+	public Marca saveMarca(Marca marca) {
+		return marcaRepository.save(marca);
+	}
+
+	// Método para excluir marca
+	public void deleteMarca(int id) {
+		marcaRepository.deleteById(id);
+	}
+
 }

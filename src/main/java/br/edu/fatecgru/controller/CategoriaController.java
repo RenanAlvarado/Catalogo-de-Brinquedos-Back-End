@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.edu.fatecgru.model.entity.Brinquedo;
 import br.edu.fatecgru.model.entity.Categoria;
 import br.edu.fatecgru.service.CategoriaService;
 import br.edu.fatecgru.service.ImagemService;
@@ -82,7 +81,7 @@ public class CategoriaController {
 
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			Brinquedo novo = mapper.readValue(categoriaJson, Brinquedo.class);
+			Categoria novo = mapper.readValue(categoriaJson, Categoria.class);
 
 			Categoria atual = categoriaService.getById(id);
 
@@ -117,5 +116,4 @@ public class CategoriaController {
 			return ResponseEntity.status(500).body("Erro ao deletar: " + e.getMessage());
 		}
 	}
-
 }

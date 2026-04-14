@@ -24,7 +24,7 @@ public class CategoriaService {
 		return categoriaRepository.findByNomeContains(nome);
 	}
 
-	// Consulta por categoria que contém no nome
+	// Consulta por id categoria
 	public Categoria getById(int id) {
 		return categoriaRepository.findById(id).orElse(null);
 	}
