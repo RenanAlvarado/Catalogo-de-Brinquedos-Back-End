@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.fatecgru.model.dto.UsuarioCadastroDTO;
 import br.edu.fatecgru.model.dto.UsuarioLoginDTO;
 import br.edu.fatecgru.model.dto.UsuarioUpdateDTO;
 import br.edu.fatecgru.model.entity.Usuario;
+import br.edu.fatecgru.service.ImagemService;
 import br.edu.fatecgru.service.UsuarioService;
 
 @CrossOrigin(origins = "*")
@@ -26,6 +29,9 @@ import br.edu.fatecgru.service.UsuarioService;
 public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@Autowired
+	private ImagemService imagemService;
 
 	@GetMapping
 	public List<Usuario> listarTodos() {
@@ -69,7 +75,10 @@ public class UsuarioController {
 
 			atual.setNome(dto.getNome());
 			atual.setTelefone(dto.getTelefone());
-			atual.setEndereco(dto.getEndereco());
+
+			if (dto.getEndereco() != null) {
+				atual.setEndereco(dto.getEndereco());
+			}
 
 			Usuario usuarioSalvo = usuarioService.saveUsuario(atual);
 
@@ -81,4 +90,25 @@ public class UsuarioController {
 		}
 	}
 
+	// Pasta dos brinquedos para salvar
+	String pastaUsuarios = "usuarios/";
+
+	@PutMapping("/{id}/imagem")
+	public ResponseEntity<?> atualizarImagem(@PathVariable Integer id, @RequestParam("imagem") MultipartFile imagem) {
+		try {
+			Usuario usuario = usuarioService.getById(id);
+
+			String novaImagem = imagemService.substituirImagem(usuario.getImagem(), imagem, "usuarios/");
+
+			usuario.setImagem(novaImagem);
+
+			Usuario atualizado = usuarioService.saveUsuario(usuario);
+
+			return ResponseEntity.ok(atualizado);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(500).body(e.getMessage());
+		}
+	}
 }

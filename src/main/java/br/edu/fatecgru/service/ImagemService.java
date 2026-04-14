@@ -11,20 +11,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ImagemService {
 
-	private final String PASTA = System.getProperty("user.dir") + "/uploads/toys/";
-
 	// salvar imagem
-	public String salvarImagem(MultipartFile imagem) throws Exception {
+	public String salvarImagem(MultipartFile imagem, String pasta) throws Exception {
 		if (imagem == null || imagem.isEmpty())
 			return null;
 
-		File diretorio = new File(PASTA);
+		String caminhoPasta = System.getProperty("user.dir") + "/uploads/" + pasta;
+
+		File diretorio = new File(caminhoPasta);
 		if (!diretorio.exists()) {
 			diretorio.mkdirs();
 		}
 
 		String nomeArquivo = System.currentTimeMillis() + "_" + imagem.getOriginalFilename();
-		Path caminho = Paths.get(PASTA + nomeArquivo);
+		Path caminho = Paths.get(caminhoPasta + nomeArquivo);
 
 		Files.write(caminho, imagem.getBytes());
 
@@ -32,25 +32,33 @@ public class ImagemService {
 	}
 
 	// deletar imagem
-	public void deletarImagem(String nomeImagem) {
+	public void deletarImagem(String nomeImagem, String pasta) {
 		if (nomeImagem == null || nomeImagem.isEmpty())
 			return;
 
 		try {
-			Files.deleteIfExists(Paths.get(PASTA + nomeImagem));
+			String caminhoPasta = System.getProperty("user.dir") + "/uploads/" + pasta;
+
+			Path caminho = Paths.get(caminhoPasta + nomeImagem);
+
+			Files.deleteIfExists(caminho);
 		} catch (Exception e) {
 			System.out.println("Erro ao deletar imagem: " + e.getMessage());
 		}
 	}
 
 	// substituir imagem
-	public String substituirImagem(String antiga, MultipartFile nova) throws Exception {
+	public String substituirImagem(String antiga, MultipartFile nova, String pasta) throws Exception {
 		if (nova == null || nova.isEmpty())
 			return antiga;
 
-		String novaImagem = salvarImagem(nova);
+		String novaImagem = salvarImagem(nova, pasta);
 
-		deletarImagem(antiga);
+		try {
+			deletarImagem(antiga, pasta);
+		} catch (Exception e) {
+			System.out.println("Erro ao deletar imagem antiga: " + e.getMessage());
+		}
 
 		return novaImagem;
 	}

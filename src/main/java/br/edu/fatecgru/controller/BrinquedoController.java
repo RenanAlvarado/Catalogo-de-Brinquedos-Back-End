@@ -79,6 +79,9 @@ public class BrinquedoController {
 		return brinquedoService.filtrar(categorias, marcas, page, size, sort);
 	}
 
+	// Pasta dos brinquedos para salvar
+	String pastaBrinquedos = "toys/";
+
 	// Salvar brinquedo
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestPart("brinquedo") String brinquedoJson,
@@ -88,7 +91,7 @@ public class BrinquedoController {
 			ObjectMapper mapper = new ObjectMapper();
 			Brinquedo brinquedo = mapper.readValue(brinquedoJson, Brinquedo.class);
 
-			String nomeImagem = imagemService.salvarImagem(imagem);
+			String nomeImagem = imagemService.salvarImagem(imagem, pastaBrinquedos);
 
 			if (nomeImagem != null) {
 				brinquedo.setImagem(nomeImagem);
@@ -118,7 +121,7 @@ public class BrinquedoController {
 			atual.setCategoria(novo.getCategoria());
 			atual.setMarca(novo.getMarca());
 
-			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem);
+			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem, pastaBrinquedos);
 
 			atual.setImagem(imagemAtualizada);
 
@@ -136,7 +139,7 @@ public class BrinquedoController {
 			Brinquedo brinquedo = brinquedoService.getById(id);
 
 			if (brinquedo.getImagem() != null) {
-				imagemService.deletarImagem(brinquedo.getImagem());
+				imagemService.deletarImagem(brinquedo.getImagem(), pastaBrinquedos);
 			}
 
 			brinquedoService.deleteBrinquedo(id);
