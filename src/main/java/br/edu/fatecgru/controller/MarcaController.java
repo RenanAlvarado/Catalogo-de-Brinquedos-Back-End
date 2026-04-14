@@ -38,6 +38,11 @@ public class MarcaController {
 		return marcaService.listarTodos();
 	}
 
+	@GetMapping("/{id}")
+	public Marca buscarPorId(@PathVariable int id) {
+		return marcaService.getById(id);
+	}
+
 	// Pasta das marcas para salvar
 	String pastaMarcas = "brands/";
 
