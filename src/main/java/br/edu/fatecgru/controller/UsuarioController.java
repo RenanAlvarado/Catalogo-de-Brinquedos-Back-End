@@ -1,9 +1,13 @@
 package br.edu.fatecgru.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +25,7 @@ import br.edu.fatecgru.model.dto.UsuarioUpdateDTO;
 import br.edu.fatecgru.model.entity.Usuario;
 import br.edu.fatecgru.service.ImagemService;
 import br.edu.fatecgru.service.UsuarioService;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -55,7 +60,25 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/cadastro")
-	public ResponseEntity<?> cadastrar(@RequestBody UsuarioCadastroDTO cadastroRequest) {
+	public ResponseEntity<?> cadastrar(@Valid @RequestBody UsuarioCadastroDTO cadastroRequest, BindingResult result) {
+
+		// validações automáticas do DTO
+		if (result.hasErrors()) {
+			Map<String, String> erros = new HashMap<>();
+
+			for (FieldError error : result.getFieldErrors()) {
+				erros.put(error.getField(), error.getDefaultMessage());
+			}
+
+			return ResponseEntity.badRequest().body(erros);
+		}
+
+		// validação de senha
+		if (cadastroRequest.getSenha() != null
+				&& !cadastroRequest.getSenha().equals(cadastroRequest.getConfirmarSenha())) {
+			return ResponseEntity.badRequest().body("As senhas não coincidem");
+		}
+
 		try {
 			Usuario usuario = usuarioService.cadastrar(cadastroRequest.getNome(), cadastroRequest.getEmail(),
 					cadastroRequest.getSenha());
