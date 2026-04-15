@@ -113,7 +113,7 @@ public class CategoriaController {
 			return ResponseEntity.noContent().build(); // 204
 
 		} catch (Exception e) {
-			return ResponseEntity.status(500).body("Erro ao deletar: " + e.getMessage());
+			return ResponseEntity.status(500).body(e.getMessage());
 		}
 	}
 }

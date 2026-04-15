@@ -43,6 +43,12 @@ public class MarcaController {
 		return marcaService.getById(id);
 	}
 
+	// Busca por contem nome
+	@GetMapping("/contem-nome/{nome}")
+	public List<Marca> buscarPorContemNome(@PathVariable String nome) {
+		return marcaService.getByContainsName(nome);
+	}
+
 	// Pasta das marcas para salvar
 	String pastaMarcas = "brands/";
 
@@ -107,7 +113,7 @@ public class MarcaController {
 			return ResponseEntity.noContent().build(); // 204
 
 		} catch (Exception e) {
-			return ResponseEntity.status(500).body("Erro ao deletar: " + e.getMessage());
+			return ResponseEntity.status(500).body(e.getMessage());
 		}
 	}
 

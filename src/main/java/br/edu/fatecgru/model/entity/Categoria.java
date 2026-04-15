@@ -1,9 +1,15 @@
 package br.edu.fatecgru.model.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +22,10 @@ public class Categoria {
 	private Integer id;
 
 	private String nome, imagem;
+
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@JsonIgnore
+	private List<Brinquedo> brinquedos;
 
 	// Construtores
 	public Categoria() {
@@ -52,4 +62,9 @@ public class Categoria {
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
 	}
+
+	public List<Brinquedo> getBrinquedos() {
+		return brinquedos;
+	}
+
 }
