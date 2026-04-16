@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.edu.fatecgru.mapper.EnderecoMapper;
 import br.edu.fatecgru.model.dto.UsuarioCadastroDTO;
 import br.edu.fatecgru.model.dto.UsuarioLoginDTO;
 import br.edu.fatecgru.model.dto.UsuarioUpdateDTO;
@@ -97,17 +98,30 @@ public class UsuarioController {
 		}
 	}
 
+	// Método de atualizar o perfil
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody UsuarioUpdateDTO dto) {
-		try {
+	public ResponseEntity<?> atualizar(@PathVariable Integer id, @Valid @RequestBody UsuarioUpdateDTO dto,
+			BindingResult result) {
 
+		// erros de validação
+		if (result.hasErrors()) {
+			Map<String, String> erros = new HashMap<>();
+
+			result.getFieldErrors().forEach(erro -> {
+				erros.put(erro.getField(), erro.getDefaultMessage());
+			});
+
+			return ResponseEntity.badRequest().body(erros);
+		}
+
+		try {
 			Usuario atual = usuarioService.getById(id);
 
 			atual.setNome(dto.getNome());
 			atual.setTelefone(dto.getTelefone());
 
 			if (dto.getEndereco() != null) {
-				atual.setEndereco(dto.getEndereco());
+				atual.setEndereco(EnderecoMapper.toEntity(dto.getEndereco()));
 			}
 
 			Usuario usuarioSalvo = usuarioService.saveUsuario(atual);
@@ -115,12 +129,11 @@ public class UsuarioController {
 			return ResponseEntity.ok(usuarioSalvo);
 
 		} catch (Exception e) {
-
-			return ResponseEntity.status(500).body("Erro ao processar atualização: " + e.getMessage());
+			return ResponseEntity.status(500).body("Erro ao atualizar usuário");
 		}
 	}
 
-	// Pasta dos brinquedos para salvar
+	// Pasta do usuário para salvar
 	String pastaUsuarios = "usuarios/";
 
 	@PutMapping("/{id}/imagem")
