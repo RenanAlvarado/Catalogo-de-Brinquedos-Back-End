@@ -1,9 +1,16 @@
 package br.edu.fatecgru.model.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class UsuarioLoginDTO {
 
-	// Atributos
+	// Atributos com validações
+	@NotBlank(message = "Email é obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
+
+	@NotBlank(message = "Senha é obrigatória")
 	private String senha;
 
 	// Getters e Setters
