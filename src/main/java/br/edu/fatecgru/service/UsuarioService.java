@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.fatecgru.model.dto.UsuarioAlterarSenhaDTO;
 import br.edu.fatecgru.model.entity.TipoUsuario;
 import br.edu.fatecgru.model.entity.Usuario;
 import br.edu.fatecgru.repository.UsuarioRepository;
@@ -67,6 +68,27 @@ public class UsuarioService {
 	// Método para alterar
 	public Usuario saveUsuario(Usuario usuario) {
 		return usuarioRepository.save(usuario);
+	}
+
+	public void alterarSenha(int id, UsuarioAlterarSenhaDTO dto) {
+
+		Usuario usuario = usuarioRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+		// validação de confirmação
+		if (!dto.getSenha().equals(dto.getConfirmarSenha())) {
+			throw new RuntimeException("Senhas não conferem");
+		}
+
+		// validação básica
+		if (dto.getSenha().length() < 6) {
+			throw new RuntimeException("Senha deve ter no mínimo 6 caracteres");
+		}
+
+		// salva senha (IMPORTANTE: aqui deveria ser criptografada se você usar encoder)
+		usuario.setSenha(dto.getSenha());
+
+		usuarioRepository.save(usuario);
 	}
 
 }

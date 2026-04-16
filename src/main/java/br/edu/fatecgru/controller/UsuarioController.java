@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.edu.fatecgru.model.dto.UsuarioAlterarSenhaDTO;
 import br.edu.fatecgru.model.dto.UsuarioCadastroDTO;
 import br.edu.fatecgru.model.dto.UsuarioLoginDTO;
 import br.edu.fatecgru.model.dto.UsuarioUpdateDTO;
@@ -132,6 +133,40 @@ public class UsuarioController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(500).body(e.getMessage());
+		}
+	}
+
+	@PutMapping("/{id}/senha")
+	public ResponseEntity<?> alterarSenha(@PathVariable Integer id, @RequestBody @Valid UsuarioAlterarSenhaDTO dto,
+			BindingResult result) {
+
+		try {
+
+			// validações do Bean Validation
+			if (result.hasErrors()) {
+				Map<String, String> erros = new HashMap<>();
+
+				for (FieldError error : result.getFieldErrors()) {
+					erros.put(error.getField(), error.getDefaultMessage());
+				}
+
+				return ResponseEntity.badRequest().body(erros);
+			}
+
+			// validação de confirmação
+			if (!dto.getSenha().equals(dto.getConfirmarSenha())) {
+				return ResponseEntity.badRequest().body("As senhas não coincidem");
+			}
+
+			usuarioService.alterarSenha(id, dto);
+
+			Map<String, String> resposta = new HashMap<>();
+			resposta.put("message", "Senha alterada com sucesso");
+
+			return ResponseEntity.ok(resposta);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body("Erro ao alterar senha: " + e.getMessage());
 		}
 	}
 }
