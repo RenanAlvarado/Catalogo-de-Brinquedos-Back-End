@@ -49,8 +49,20 @@ public class BrinquedoService {
 	}
 
 	// Filtros unificados
-	public Page<Brinquedo> filtrar(List<Long> categorias, List<Long> marcas, int page, int size, String sort) {
+	public Page<Brinquedo> filtrar(List<Long> categorias, List<Long> marcas, String search, int page, int size,
+			String sort) {
 
+		// 🔥 TRATAMENTO IMPORTANTE (evita bug com listas vazias)
+		if (categorias != null && categorias.isEmpty())
+			categorias = null;
+		if (marcas != null && marcas.isEmpty())
+			marcas = null;
+		if (search != null && search.isBlank())
+			search = null;
+
+		// ===============================
+		// ORDENAÇÃO
+		// ===============================
 		Sort ordenacao = Sort.unsorted();
 
 		if (sort != null && sort.contains(",")) {
@@ -68,7 +80,8 @@ public class BrinquedoService {
 
 		Pageable pageable = PageRequest.of(page, size, ordenacao);
 
-		return brinquedoRepository.filtrar(categorias, marcas, pageable);
+		// 🔥 CHAMADA FINAL (COM SEARCH)
+		return brinquedoRepository.filtrar(categorias, marcas, search, pageable);
 	}
 
 	// Método para salvar ou alterar brinquedo

@@ -26,11 +26,11 @@ public interface BrinquedoRepository extends JpaRepository<Brinquedo, Integer> {
 
 	// Ordenação
 	@Query("""
-			SELECT b FROM Brinquedo b
-			WHERE (:categorias IS NULL OR b.categoria.id IN :categorias)
-			AND (:marcas IS NULL OR b.marca.id IN :marcas)
+			    SELECT b FROM Brinquedo b
+			    WHERE (:search IS NULL OR LOWER(b.nome) LIKE LOWER(CONCAT('%', :search, '%')))
+			    AND (:categorias IS NULL OR b.categoria.id IN :categorias)
+			    AND (:marcas IS NULL OR b.marca.id IN :marcas)
 			""")
 	Page<Brinquedo> filtrar(@Param("categorias") List<Long> categorias, @Param("marcas") List<Long> marcas,
-			Pageable pageable);
-
+			@Param("search") String search, Pageable pageable);
 }

@@ -74,9 +74,10 @@ public class BrinquedoController {
 
 	@GetMapping("/filtrar")
 	public Page<Brinquedo> filtrar(@RequestParam(required = false) List<Long> categorias,
-			@RequestParam(required = false) List<Long> marcas, @RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "15") int size, @RequestParam(required = false) String sort) {
-		return brinquedoService.filtrar(categorias, marcas, page, size, sort);
+			@RequestParam(required = false) List<Long> marcas, @RequestParam(required = false) String search, // ✅ NOVO
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size,
+			@RequestParam(required = false) String sort) {
+		return brinquedoService.filtrar(categorias, marcas, search, page, size, sort);
 	}
 
 	// Pasta dos brinquedos para salvar
