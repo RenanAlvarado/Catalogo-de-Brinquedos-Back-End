@@ -49,7 +49,14 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody UsuarioLoginDTO dto) {
+	public ResponseEntity<?> login(@Valid @RequestBody UsuarioLoginDTO dto, BindingResult result) {
+
+		// validações do DTO
+		if (result.hasErrors()) {
+			return ResponseEntity.badRequest()
+					.body(result.getAllErrors().stream().map(e -> e.getDefaultMessage()).toList());
+		}
+
 		try {
 			Usuario usuario = usuarioService.login(dto.getEmail(), dto.getSenha());
 			return ResponseEntity.ok(usuario);
