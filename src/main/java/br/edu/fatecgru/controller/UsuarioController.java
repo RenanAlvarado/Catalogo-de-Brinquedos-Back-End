@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.edu.fatecgru.mapper.EnderecoMapper;
 import br.edu.fatecgru.model.dto.UsuarioAlterarSenhaDTO;
 import br.edu.fatecgru.model.dto.UsuarioCadastroDTO;
 import br.edu.fatecgru.model.dto.UsuarioLoginDTO;
 import br.edu.fatecgru.model.dto.UsuarioUpdateDTO;
 import br.edu.fatecgru.model.entity.Usuario;
+import br.edu.fatecgru.security.JwtUtil;
 import br.edu.fatecgru.service.ImagemService;
 import br.edu.fatecgru.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -39,6 +41,9 @@ public class UsuarioController {
 	@Autowired
 	private ImagemService imagemService;
 
+	@Autowired
+	private JwtUtil jwtUtil;
+
 	@GetMapping
 	public List<Usuario> listarTodos() {
 		return usuarioService.listarTodos();
@@ -52,7 +57,6 @@ public class UsuarioController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody UsuarioLoginDTO dto, BindingResult result) {
 
-		// validações do DTO
 		if (result.hasErrors()) {
 			return ResponseEntity.badRequest()
 					.body(result.getAllErrors().stream().map(e -> e.getDefaultMessage()).toList());
@@ -60,7 +64,10 @@ public class UsuarioController {
 
 		try {
 			Usuario usuario = usuarioService.login(dto.getEmail(), dto.getSenha());
-			return ResponseEntity.ok(usuario);
+
+			String token = jwtUtil.gerarToken(usuario.getEmail(), usuario.getTipo().name());
+
+			return ResponseEntity.ok(Map.of("token", token, "usuario", usuario));
 
 		} catch (Exception e) {
 			return ResponseEntity.status(401).body(e.getMessage());
@@ -98,17 +105,30 @@ public class UsuarioController {
 		}
 	}
 
+	// Método de atualizar o perfil
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody UsuarioUpdateDTO dto) {
-		try {
+	public ResponseEntity<?> atualizar(@PathVariable Integer id, @Valid @RequestBody UsuarioUpdateDTO dto,
+			BindingResult result) {
 
+		// erros de validação
+		if (result.hasErrors()) {
+			Map<String, String> erros = new HashMap<>();
+
+			result.getFieldErrors().forEach(erro -> {
+				erros.put(erro.getField(), erro.getDefaultMessage());
+			});
+
+			return ResponseEntity.badRequest().body(erros);
+		}
+
+		try {
 			Usuario atual = usuarioService.getById(id);
 
 			atual.setNome(dto.getNome());
 			atual.setTelefone(dto.getTelefone());
 
 			if (dto.getEndereco() != null) {
-				atual.setEndereco(dto.getEndereco());
+				atual.setEndereco(EnderecoMapper.toEntity(dto.getEndereco()));
 			}
 
 			Usuario usuarioSalvo = usuarioService.saveUsuario(atual);
@@ -116,12 +136,11 @@ public class UsuarioController {
 			return ResponseEntity.ok(usuarioSalvo);
 
 		} catch (Exception e) {
-
-			return ResponseEntity.status(500).body("Erro ao processar atualização: " + e.getMessage());
+			return ResponseEntity.status(500).body("Erro ao atualizar usuário");
 		}
 	}
 
-	// Pasta dos brinquedos para salvar
+	// Pasta do usuário para salvar
 	String pastaUsuarios = "usuarios/";
 
 	@PutMapping("/{id}/imagem")

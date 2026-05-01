@@ -1,15 +1,23 @@
 package br.edu.fatecgru.model.dto;
 
-import br.edu.fatecgru.model.entity.Endereco;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 
 public class UsuarioUpdateDTO {
 
-	// Atributos que podem ser atualizados
+	// Atributos que podem ser atualizados, junto com as validações
+
+	// Nome obrigatório e completo
+	@Pattern(regexp = "^[A-Za-zÀ-ÿ]+\\s+[A-Za-zÀ-ÿ\\s]+$", message = "Digite o nome completo")
 	private String nome;
 
+	// Telefone opcional, mas válido se preenchido
+	@Pattern(regexp = "^$|^\\d{10,11}$", message = "Telefone inválido")
 	private String telefone;
 
-	private Endereco endereco;
+	// Endereço validado também
+	@Valid
+	private EnderecoDTO endereco;
 
 	// Getters e Setters
 	public String getNome() {
@@ -28,11 +36,11 @@ public class UsuarioUpdateDTO {
 		this.telefone = telefone;
 	}
 
-	public Endereco getEndereco() {
+	public EnderecoDTO getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
+	public void setEndereco(EnderecoDTO endereco) {
 		this.endereco = endereco;
 	}
 
