@@ -61,7 +61,7 @@ public class MarcaController {
 			ObjectMapper mapper = new ObjectMapper();
 			Marca marca = mapper.readValue(marcaJson, Marca.class);
 
-			String nomeImagem = imagemService.salvarImagem(imagem, pastaMarcas);
+			String nomeImagem = imagemService.salvarImagem(imagem);
 
 			if (nomeImagem != null) {
 				marca.setImagem(nomeImagem);
@@ -87,7 +87,7 @@ public class MarcaController {
 
 			atual.setNome(novo.getNome());
 
-			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem, pastaMarcas);
+			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem);
 
 			atual.setImagem(imagemAtualizada);
 
@@ -105,7 +105,7 @@ public class MarcaController {
 			Marca marca = marcaService.getById(id);
 
 			if (marca.getImagem() != null) {
-				imagemService.deletarImagem(marca.getImagem(), pastaMarcas);
+				imagemService.deletarImagem(marca.getImagem());
 			}
 
 			marcaService.deleteMarca(id);

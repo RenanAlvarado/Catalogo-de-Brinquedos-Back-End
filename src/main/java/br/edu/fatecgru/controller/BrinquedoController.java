@@ -92,7 +92,7 @@ public class BrinquedoController {
 			ObjectMapper mapper = new ObjectMapper();
 			Brinquedo brinquedo = mapper.readValue(brinquedoJson, Brinquedo.class);
 
-			String nomeImagem = imagemService.salvarImagem(imagem, pastaBrinquedos);
+			String nomeImagem = imagemService.salvarImagem(imagem);
 
 			if (nomeImagem != null) {
 				brinquedo.setImagem(nomeImagem);
@@ -122,7 +122,7 @@ public class BrinquedoController {
 			atual.setCategoria(novo.getCategoria());
 			atual.setMarca(novo.getMarca());
 
-			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem, pastaBrinquedos);
+			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem);
 
 			atual.setImagem(imagemAtualizada);
 
@@ -140,7 +140,7 @@ public class BrinquedoController {
 			Brinquedo brinquedo = brinquedoService.getById(id);
 
 			if (brinquedo.getImagem() != null) {
-				imagemService.deletarImagem(brinquedo.getImagem(), pastaBrinquedos);
+				imagemService.deletarImagem(brinquedo.getImagem());
 			}
 
 			brinquedoService.deleteBrinquedo(id);

@@ -148,7 +148,7 @@ public class UsuarioController {
 		try {
 			Usuario usuario = usuarioService.getById(id);
 
-			String novaImagem = imagemService.substituirImagem(usuario.getImagem(), imagem, "usuarios/");
+			String novaImagem = imagemService.substituirImagem(usuario.getImagem(), imagem);
 
 			usuario.setImagem(novaImagem);
 

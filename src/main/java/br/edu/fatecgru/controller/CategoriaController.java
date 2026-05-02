@@ -61,7 +61,7 @@ public class CategoriaController {
 			ObjectMapper mapper = new ObjectMapper();
 			Categoria categoria = mapper.readValue(categoriaJson, Categoria.class);
 
-			String nomeImagem = imagemService.salvarImagem(imagem, pastaCategorias);
+			String nomeImagem = imagemService.salvarImagem(imagem);
 
 			if (nomeImagem != null) {
 				categoria.setImagem(nomeImagem);
@@ -87,13 +87,14 @@ public class CategoriaController {
 
 			atual.setNome(novo.getNome());
 
-			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem, pastaCategorias);
+			String imagemAtualizada = imagemService.substituirImagem(atual.getImagem(), imagem);
 
 			atual.setImagem(imagemAtualizada);
 
 			return ResponseEntity.ok(categoriaService.saveCategoria(atual));
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(500).body(e.getMessage());
 		}
 	}
@@ -105,7 +106,7 @@ public class CategoriaController {
 			Categoria categoria = categoriaService.getById(id);
 
 			if (categoria.getImagem() != null) {
-				imagemService.deletarImagem(categoria.getImagem(), pastaCategorias);
+				imagemService.deletarImagem(categoria.getImagem());
 			}
 
 			categoriaService.deleteCategoria(id);
