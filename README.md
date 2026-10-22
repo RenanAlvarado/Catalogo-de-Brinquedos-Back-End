@@ -1,135 +1,71 @@
 # 🧸 Catálogo de Brinquedos
 
-Sistema web de **catálogo de brinquedos infantis** desenvolvido com **Spring Boot (Back-End)** e **HTML, CSS e JavaScript (Front-End)**.
+API REST desenvolvida com Spring Boot responsável por gerenciar toda a lógica de negócio do sistema de catálogo de brinquedos.
 
-O objetivo do projeto é permitir que usuários visualizem brinquedos organizados por categorias, com sistema de cadastro e autenticação de usuários.
+Este serviço fornece endpoints para gestão de usuários, brinquedos e categorias, além de estruturar a base para futuras funcionalidades como autenticação segura, controle de acesso e expansão para e-commerce.
 
 ---
 
-# 🚀 Tecnologias Utilizadas
+# 🚀 Visão Geral
 
-## Back-End
+O back-end do projeto foi construído seguindo boas práticas de desenvolvimento com Java, utilizando arquitetura em camadas (Controller → Service → Repository → Entity), garantindo organização, escalabilidade e fácil manutenção.
+
+A API é consumida por um front-end web, sendo responsável por:
+
+* Processamento de requisições
+* Regras de negócio
+* Persistência de dados
+* Estruturação dos dados retornados
+
+---
+
+# 🛠️ Tecnologias Utilizadas
 
 * Java
 * Spring Boot
 * Spring Data JPA
+* Spring Security
 * Hibernate
 * Maven
 * MySQL
+  
+---
 
-## Front-End
+# 📂 Arquitetura do Projeto
 
-* HTML5
-* CSS3
-* JavaScript
-* Consumo de API REST
+A aplicação segue o padrão de arquitetura em camadas:
+
+controller → Entrada das requisições (API REST)
+service    → Regras de negócio
+repository → Comunicação com o banco
+entity     → Modelos de dados
 
 ---
 
-# 📂 Estrutura do Projeto
+# 📂 Estrutura de Diretórios
 
-## Back-End
+src/main/java/br/edu/fatecgru/
 
-src/main/java
-│
-├── controller → Endpoints da API
-├── service → Regras de negócio
-├── repository → Acesso ao banco de dados
-└── model/entity → Entidades do sistema
-
-Principais entidades:
-
-* **Usuario**
-* **Brinquedo**
-* **Categoria**
+├── controller
+├── service
+├── repository
+├── entity
+├── dto
+└── config
 
 ---
 
-## Front-End
+# 📡 API REST
 
-index.html → Página principal do catálogo
-login.html → Tela de login
-cadastro.html → Cadastro de usuários
-recuperar_senha.html → Recuperação de senha
+A API segue o padrão RESTful, com endpoints organizados por recurso.
 
-Diretórios:
+# Exemplo: 👤 Usuários
 
-css/ → Estilos da aplicação
-js/ → Scripts e integração com API
-img/ → Imagens de brinquedos, marcas e categorias
-
----
-
-# ⚙️ Como executar o projeto
-
-## 1️⃣ Clonar o repositório
-
-```bash
-git clone https://github.com/seu-usuario/catalogo-brinquedos.git
-```
-
----
-
-## 2️⃣ Rodar o Back-End
-
-Entre na pasta:
-
-```bash
-cd Catalogo-de-Brinquedos-Back-End
-```
-
-Execute:
-
-```bash
-./mvnw spring-boot:run
-```
-
-Ou execute a classe:
-
-```
-CatalogoBrinquedosApplication.java
-```
-
----
-
-## 3️⃣ Rodar o Front-End
-
-Abra o arquivo:
-
-```
-index.html
-```
-
-ou utilize a extensão **Live Server** no VSCode.
-
----
-
-# 📡 API
-
-Exemplos de endpoints:
-
-### Usuários
-
-```
-GET /usuarios
-POST /usuarios
-```
-
-### Brinquedos
-
-```
-GET /brinquedos
-POST /brinquedos
-PUT /brinquedos/{id}
-DELETE /brinquedos/{id}
-```
-
-### Categorias
-
-```
-GET /categorias
-POST /categorias
-```
+GET    /usuarios        → Listar usuários
+POST   /usuarios        → Criar usuário
+GET    /usuarios/{id}   → Buscar por ID
+PUT    /usuarios/{id}   → Atualizar usuário
+DELETE /usuarios/{id}   → Remover usuário
 
 ---
 
@@ -142,6 +78,13 @@ O sistema possui dois tipos de usuários:
 
 ---
 
+# 🔐 Regras de Negócio
+
+* Usuários podem ser do tipo ADMIN ou CLIENTE
+* Apenas usuários ADMIN poderão gerenciar o catálogo (estrutura preparada)
+* Validações básicas de dados são aplicadas antes da persistência
+* Relacionamento entre brinquedos e categorias é obrigatório
+
 # 🎯 Objetivo do Projeto
 
 Este projeto foi desenvolvido para praticar:
@@ -151,6 +94,17 @@ Este projeto foi desenvolvido para praticar:
 * Integração Front-End e Back-End
 * Persistência de dados com JPA
 * Organização de projetos Java
+* Spring Security
+
+---
+
+# ⚙️ Como Executar o Projeto
+
+1️⃣ Pré-requisitos
+
+* Java 21 instalado
+* Configurar banco de dados no application properties 
+* Executar banco de dados 
 
 ---
 
@@ -160,59 +114,9 @@ Este projeto foi desenvolvido para praticar:
 ✔ Login de usuários
 ✔ Listagem de brinquedos
 ✔ Organização por categorias
-✔ Consumo de API no front-end
-✔ Interface web do catálogo
-
----
-
-# 🔮 Funcionalidades Futuras
-
-Algumas melhorias planejadas para o projeto:
-
-### 🔐 Segurança
-
-* Autenticação com **Spring Security**
-* Senhas criptografadas com **BCrypt**
-* Controle de acesso por tipo de usuário
-
-### 🧸 Catálogo
-
-* Filtro de brinquedos por:
-
-  * categoria
-  * idade
-  * preço
-* Busca avançada
-
-### ❤️ Usuário
-
-* Lista de **brinquedos favoritos**
-* Perfil do usuário com foto
-* Histórico de visualização
-
-### 🛒 Loja (evolução do projeto)
-
-* Carrinho de compras
-* Simulação de pedidos
-* Sistema de avaliação de brinquedos
-
-### 📊 Administração
-
-* Dashboard de administração
-* Cadastro de novos brinquedos
-* Upload de imagens
-
----
-
-# 📸 Interface
-
-O sistema possui:
-
-* Página inicial com catálogo
-* Sistema de login
-* Cadastro de usuários
-* Visualização de categorias
-* Página de recuperação de senha
+✔ Organização por marcas
+✔ Persistência de dados
+✔ Integração web com front
 
 ---
 
